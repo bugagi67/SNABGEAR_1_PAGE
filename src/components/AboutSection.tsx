@@ -1,0 +1,98 @@
+import React from 'react';
+import styles from './AboutSection.module.css';
+import { COMPANY_INFO } from '../data/categories';
+import { Check, Building2, ShieldCheck, MapPin, Truck } from 'lucide-react';
+
+export const AboutSection: React.FC = () => {
+  return (
+    <section id="about" className={styles.aboutSection}>
+      <div className={styles.container}>
+        <div className={styles.grid}>
+          
+          {/* Left Column: Story & Core Mission */}
+          <div>
+            <span className={styles.eyebrow}>О компании SNABGEAR</span>
+            <h2 className={styles.title}>
+              Надежный партнер промышленного сектора
+            </h2>
+            <p className={styles.leadText}>
+              Компания <strong>{COMPANY_INFO.name}</strong> (бренд <strong>{COMPANY_INFO.brandName}</strong>) специализируется на оптовых поставках профессионального инструмента, крепежа, спецодежды и промышленного оборудования для заводов, строительных трестов и монтажных организаций.
+            </p>
+            <p className={styles.bodyText}>
+              Мы отказались от розничных наценок и сложной бюрократии. Наша цель — закрыть составную спецификацию заказчика в едином счете, организовать оперативную отгрузку со склада в Смоленске и предоставить полный пакет закрывающих документов с выделенным НДС 22%.
+            </p>
+
+            <div className={styles.highlightsList}>
+              <div className={styles.highlightItem}>
+                <Check size={18} className={styles.checkIcon} />
+                <span>Прямые договоры с производителями и официальными дистрибьюторами</span>
+              </div>
+              <div className={styles.highlightItem}>
+                <Check size={18} className={styles.checkIcon} />
+                <span>Собственный региональный склад в промышленном районе Смоленска</span>
+              </div>
+              <div className={styles.highlightItem}>
+                <Check size={18} className={styles.checkIcon} />
+                <span>Безналичный расчет строго с юридическими лицами (ООО, АО, ИП) с НДС 22%</span>
+              </div>
+              <div className={styles.highlightItem}>
+                <Check size={18} className={styles.checkIcon} />
+                <span>Электронный документооборот (Диадок, СБИС) в день отгрузки</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Verified Enterprise Card */}
+          <div className={styles.rightCard}>
+            <div className={styles.cardHeader}>
+              <Building2 size={24} color="var(--color-primary)" />
+              <div className={styles.cardHeaderTitle}>Карточка поставщика</div>
+            </div>
+
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>Организация:</span>
+              <span className={styles.profileValue}>{COMPANY_INFO.name}</span>
+            </div>
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>Торговая марка:</span>
+              <span className={styles.profileValue}>{COMPANY_INFO.brandName}</span>
+            </div>
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>ИНН / КПП:</span>
+              <span className={styles.profileValue}>{COMPANY_INFO.inn} / {COMPANY_INFO.kpp}</span>
+            </div>
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>ОГРН:</span>
+              <span className={styles.profileValue}>{COMPANY_INFO.ogrn}</span>
+            </div>
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>Складской комплекс:</span>
+              <span className={styles.profileValue}>{COMPANY_INFO.location}</span>
+            </div>
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>Система налогообложения:</span>
+              <span className={styles.profileValue}>ОСНО (НДС 22%)</span>
+            </div>
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>Телефон отдела снабжения:</span>
+              <a href={`tel:${COMPANY_INFO.phoneClean}`} style={{ color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'none' }}>
+                {COMPANY_INFO.phone}
+              </a>
+            </div>
+            <div className={styles.profileRow}>
+              <span className={styles.profileLabel}>Электронная почта:</span>
+              <a href={`mailto:${COMPANY_INFO.email}`} style={{ color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'none' }}>
+                {COMPANY_INFO.email}
+              </a>
+            </div>
+
+            <div className={styles.cardFooter}>
+              <strong>Оперативная логистика:</strong> Самовывоз со склада в промышленном районе Смоленска в день оплаты или доставка автотранспортом компании и федеральными транспортными компаниями по всей России.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};

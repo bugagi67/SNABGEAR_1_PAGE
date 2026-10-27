@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Hero.module.css';
 import { COMPANY_INFO } from '../data/categories';
-import { FileUp, ArrowDown, ShieldCheck, Warehouse, Percent, Clock } from 'lucide-react';
+import { FileUp, ArrowDown, ShieldCheck, Percent, Clock, CalendarClock } from 'lucide-react';
 
 interface HeroProps {
   onScrollToForm: () => void;
@@ -27,10 +27,9 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToForm, onScrollToCatalog })
             Комплексное снабжение промышленных предприятий
           </h1>
 
-          {/* Subtitle strictly according to requirements */}
+          {/* Subtitle */}
           <p className={styles.subtitle}>
-            Поставка инструмента, оборудования и крепежа со склада в Смоленске.{' '}
-            <span className={styles.subtitleHighlight}>Работаем с НДС 22%</span>
+            Поставка инструмента, оборудования и крепежа в Смоленске и Смоленской области.
           </p>
 
           {/* Big Red Button + Secondary Action */}
@@ -58,19 +57,19 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToForm, onScrollToCatalog })
           <div className={styles.statsGrid}>
             <div className={styles.statCard}>
               <div className={styles.statValue}>
-                <span>Смоленск</span>
+                <span>14 дней</span>
               </div>
               <div className={styles.statLabel}>
-                Собственный склад в промышленном районе
+                Отсрочка платежа, лимиты по согласованию
               </div>
             </div>
 
             <div className={styles.statCard}>
               <div className={styles.statValue}>
-                <span className={styles.statAccent}>22%</span>
+                <span className={styles.statAccent}>1 счет</span>
               </div>
               <div className={styles.statLabel}>
-                НДС выделен во всех УПД и счетах
+                Закрываем сложные сборные спецификации
               </div>
             </div>
 
@@ -88,7 +87,7 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToForm, onScrollToCatalog })
                 <span className={styles.statAccent}>от 24ч</span>
               </div>
               <div className={styles.statLabel}>
-                Срок отгрузки со склада и доставка по РФ
+                Срок комплектации и быстрая отгрузка
               </div>
             </div>
           </div>

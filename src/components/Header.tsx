@@ -131,7 +131,7 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToForm }) => {
                 className={styles.navLink}
                 onClick={(e) => handleNavClick(e, 'contacts')}
               >
-                Контакты и склад
+                Контакты
               </a>
             </div>
 

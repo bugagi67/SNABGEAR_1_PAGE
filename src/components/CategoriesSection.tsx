@@ -71,7 +71,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           <span className={styles.eyebrow}>Номенклатура поставок</span>
           <h2 className={styles.title}>Что мы поставляем</h2>
           <p className={styles.subtitle}>
-            13 ключевых направлений комплексного снабжения предприятий, цехов и строительных площадок со склада в Смоленске с гарантией соответствия ГОСТ и ТУ.
+            13 ключевых направлений комплексного снабжения предприятий, цехов и строительных площадок с гарантией соответствия ГОСТ и ТУ.
           </p>
         </div>
 
@@ -107,7 +107,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               <div className={styles.cardFooter}>
                 <div className={styles.stockStatus}>
                   <span className={styles.statusDot} />
-                  <span>В наличии на складе</span>
+                  <span>В наличии</span>
                 </div>
 
                 <button

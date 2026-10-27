@@ -7,7 +7,6 @@ import {
   CheckCircle2, 
   Trash2, 
   FileText, 
-  Sparkles,
   Download,
   Mail,
   Phone
@@ -98,22 +97,6 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
     reader.readAsDataURL(file);
   };
 
-  // Demo autofill for fast testing by reviewer
-  const handleAutofillDemo = () => {
-    setCompanyOrInn('ООО «Смоленский Механический Завод» / ИНН 6732991040');
-    setContactPerson('Воронов Дмитрий Сергеевич (Начальник ОМТС)');
-    setPhone('+7 (920) 664-90-68');
-    setEmail('dmitry.voronov@smol-mech.ru');
-    setComment('Просим выставить коммерческое предложение со счетом с НДС 22%. Спецификация во вложении. Требуется отгрузка со склада в промышленном районе Смоленска.');
-    
-    // Create a real sample specification spreadsheet file for demo
-    const csvContent = '\uFEFFНаименование;Количество;Ед.изм;ГОСТ / Примечание\nСверло HSS-Co 8.5 мм;150;шт;ГОСТ 10902-77\nКруг отрезной 125х1.2х22.2;500;шт;ГОСТ 21963-2002\nБолт DIN 933 М16х60 8.8 цинк;50;кг;DIN 933\nЭлектроды сварочные УОНИ-13/55 d=3.0;120;кг;ГОСТ 9466-75';
-    const mockBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-    const mockFile = new File([mockBlob], 'Спецификация_Снабжение_Смоленск.csv', { type: 'text/csv;charset=utf-8' });
-    processFile(mockFile);
-
-    setErrors({});
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -269,7 +252,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
               Отправьте заявку или спецификацию на расчет
             </h2>
             <p className={styles.subtitle}>
-              Прикрепите файл спецификации в любом формате (.xlsx, .pdf, .doc, .csv) или опишите потребности. Инженеры отдела комплектации SNABGEAR подготовят счет с НДС 22% в течение 30 минут. Также принимаем заявки на{' '}
+              Прикрепите файл спецификации в любом формате (.xlsx, .pdf, .doc, .csv) или опишите потребности. Инженеры отдела комплектации SNABGEAR подготовят расчет в течение 30 минут. Также принимаем заявки на{' '}
               <a href={`mailto:${COMPANY_INFO.email}`} style={{ color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'underline' }}>
                 {COMPANY_INFO.email}
               </a>
@@ -301,7 +284,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
               </h3>
 
               <p className={styles.successMessage}>
-                Данные заявки и оригинальный файл спецификации переданы в отдел комплектации на адрес <strong>{COMPANY_INFO.targetEmail}</strong>. Мы свяжемся с вами в течение 30 минут для согласования цен и сроков отгрузки со склада в Смоленске.
+                Данные заявки и оригинальный файл спецификации переданы в отдел комплектации на адрес <strong>{COMPANY_INFO.targetEmail}</strong>. Мы свяжемся с вами в течение 30 минут для согласования цен и сроков отгрузки.
               </p>
 
               {submittedDataSummary && (
@@ -330,10 +313,6 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
                   <div className={styles.summaryRow}>
                     <span className={styles.summaryLabel}>Адрес доставки заявки:</span>
                     <span className={styles.summaryVal}>{COMPANY_INFO.targetEmail}</span>
-                  </div>
-                  <div className={styles.summaryRow}>
-                    <span className={styles.summaryLabel}>Склад комплектации:</span>
-                    <span className={styles.summaryVal}>Смоленск, промышленный район</span>
                   </div>
                 </div>
               )}
@@ -389,19 +368,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
                 name="Спецификация_название" 
                 value={attachedFile ? `${attachedFile.name} (${attachedFile.sizeFormatted})` : 'Файл не приложен'} 
               />
-              <input type="hidden" name="Склад_отгрузки" value={COMPANY_INFO.location} />
-              
-              {/* Quick test autofill bar */}
-              <div className={styles.demoFillBar}>
-                <button
-                  type="button"
-                  className={styles.demoFillBtn}
-                  onClick={handleAutofillDemo}
-                >
-                  <Sparkles size={14} />
-                  <span>Заполнить пример с файлом для теста</span>
-                </button>
-              </div>
+              <input type="hidden" name="Регион_поставки" value={COMPANY_INFO.location} />
 
               <div className={styles.formGrid}>
                 
@@ -416,7 +383,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
                     type="text"
                     value={companyOrInn}
                     onChange={(e) => setCompanyOrInn(e.target.value)}
-                    placeholder="ООО «ПромТех» / ИНН 6732..."
+                    placeholder="Название организации или ИНН"
                     className={styles.input}
                   />
                 </div>
@@ -435,7 +402,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
                       setContactPerson(e.target.value);
                       if (errors.contactPerson) setErrors((prev) => ({ ...prev, contactPerson: '' }));
                     }}
-                    placeholder="Иванов Сергей, отдел снабжения"
+                    placeholder="ФИО / Должность представителя"
                     className={`${styles.input} ${errors.contactPerson ? styles.inputError : ''}`}
                     required
                   />
@@ -478,7 +445,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="order@company.ru"
+                    placeholder="corporate@domain.ru"
                     className={styles.input}
                   />
                 </div>

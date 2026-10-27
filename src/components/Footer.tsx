@@ -51,8 +51,8 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
                 <span>{COMPANY_INFO.ogrn}</span>
               </div>
               <div className={styles.reqLine}>
-                <span>Налогообложение:</span>
-                <span>{COMPANY_INFO.vat}</span>
+                <span>Система налогообложения:</span>
+                <span>ОСНО</span>
               </div>
             </div>
           </div>
@@ -100,14 +100,14 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
             </ul>
           </div>
 
-          {/* Contacts & Warehouse Location */}
+          {/* Contacts & Location */}
           <div>
-            <div className={styles.colTitle}>Контакты и склад</div>
+            <div className={styles.colTitle}>Контакты</div>
             <div className={styles.contactsList}>
               <div className={styles.contactItem}>
                 <MapPin size={20} className={styles.contactIcon} />
                 <div>
-                  <div className={styles.contactLabel}>Складской комплекс:</div>
+                  <div className={styles.contactLabel}>Регион поставок:</div>
                   <div className={styles.contactValue}>{COMPANY_INFO.location}</div>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
           </div>
 
           <div className={styles.vatNotice}>
-            Работаем только с юридическими лицами. Все цены включают {COMPANY_INFO.vat}.
+            Работаем только с юридическими лицами и ИП по безналичному расчету.
           </div>
 
           <button

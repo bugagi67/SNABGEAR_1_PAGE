@@ -19,7 +19,7 @@ export const AboutSection: React.FC = () => {
               Компания <strong>{COMPANY_INFO.name}</strong> (бренд <strong>{COMPANY_INFO.brandName}</strong>) специализируется на оптовых поставках профессионального инструмента, крепежа, спецодежды и промышленного оборудования для заводов, строительных трестов и монтажных организаций.
             </p>
             <p className={styles.bodyText}>
-              Мы отказались от розничных наценок и сложной бюрократии. Наша цель — закрыть составную спецификацию заказчика в едином счете, организовать оперативную отгрузку со склада в Смоленске и предоставить полный пакет закрывающих документов с выделенным НДС 22%.
+              Мы отказались от розничных наценок и сложной бюрократии. Наша цель — закрыть составную спецификацию заказчика в едином счете, организовать оперативную отгрузку и предоставить полный пакет закрывающих документов.
             </p>
 
             <div className={styles.highlightsList}>
@@ -29,11 +29,11 @@ export const AboutSection: React.FC = () => {
               </div>
               <div className={styles.highlightItem}>
                 <Check size={18} className={styles.checkIcon} />
-                <span>Собственный региональный склад в промышленном районе Смоленска</span>
+                <span>Отсрочка платежа 14 дней для постоянных заказчиков (лимиты по согласованию)</span>
               </div>
               <div className={styles.highlightItem}>
                 <Check size={18} className={styles.checkIcon} />
-                <span>Безналичный расчет строго с юридическими лицами (ООО, АО, ИП) с НДС 22%</span>
+                <span>Безналичный расчет строго с юридическими лицами (ООО, АО, ИП)</span>
               </div>
               <div className={styles.highlightItem}>
                 <Check size={18} className={styles.checkIcon} />
@@ -66,12 +66,12 @@ export const AboutSection: React.FC = () => {
               <span className={styles.profileValue}>{COMPANY_INFO.ogrn}</span>
             </div>
             <div className={styles.profileRow}>
-              <span className={styles.profileLabel}>Складской комплекс:</span>
+              <span className={styles.profileLabel}>Регион деятельности:</span>
               <span className={styles.profileValue}>{COMPANY_INFO.location}</span>
             </div>
             <div className={styles.profileRow}>
               <span className={styles.profileLabel}>Система налогообложения:</span>
-              <span className={styles.profileValue}>ОСНО (НДС 22%)</span>
+              <span className={styles.profileValue}>ОСНО</span>
             </div>
             <div className={styles.profileRow}>
               <span className={styles.profileLabel}>Телефон отдела снабжения:</span>
@@ -87,7 +87,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             <div className={styles.cardFooter}>
-              <strong>Оперативная логистика:</strong> Самовывоз со склада в промышленном районе Смоленска в день оплаты или доставка автотранспортом компании и федеральными транспортными компаниями по всей России.
+              <strong>Оперативная логистика:</strong> Доставка по Смоленску и Смоленской области собственным автотранспортом компании в день готовности заказа.
             </div>
           </div>
 

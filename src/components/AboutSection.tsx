@@ -11,9 +11,9 @@ export const AboutSection: React.FC = () => {
           
           {/* Left Column: Story & Core Mission */}
           <div>
-            <span className={styles.eyebrow}>О компании SNABGEAR</span>
+            <span className={styles.eyebrow}>О компании СНАБГИР (SNABGEAR)</span>
             <h2 className={styles.title}>
-              Надежный партнер промышленного сектора
+              О компании — Надежный B2B партнер комплексного снабжения предприятий
             </h2>
             <p className={styles.leadText}>
               Компания <strong>{COMPANY_INFO.name}</strong> (бренд <strong>{COMPANY_INFO.brandName}</strong>) специализируется на оптовых поставках профессионального инструмента, крепежа, спецодежды и промышленного оборудования для заводов, строительных трестов и монтажных организаций.
@@ -24,28 +24,28 @@ export const AboutSection: React.FC = () => {
 
             <div className={styles.highlightsList}>
               <div className={styles.highlightItem}>
-                <Check size={18} className={styles.checkIcon} />
+                <Check size={18} className={styles.checkIcon} aria-hidden="true" />
                 <span>Прямые договоры с производителями и официальными дистрибьюторами</span>
               </div>
               <div className={styles.highlightItem}>
-                <Check size={18} className={styles.checkIcon} />
+                <Check size={18} className={styles.checkIcon} aria-hidden="true" />
                 <span>Отсрочка платежа 14 дней для постоянных заказчиков (лимиты по согласованию)</span>
               </div>
               <div className={styles.highlightItem}>
-                <Check size={18} className={styles.checkIcon} />
+                <Check size={18} className={styles.checkIcon} aria-hidden="true" />
                 <span>Безналичный расчет строго с юридическими лицами (ООО, АО, ИП)</span>
               </div>
               <div className={styles.highlightItem}>
-                <Check size={18} className={styles.checkIcon} />
+                <Check size={18} className={styles.checkIcon} aria-hidden="true" />
                 <span>Электронный документооборот (Диадок, СБИС) в день отгрузки</span>
               </div>
             </div>
           </div>
 
           {/* Right Column: Verified Enterprise Card */}
-          <div className={styles.rightCard}>
+          <aside className={styles.rightCard} aria-label="Карточка поставщика ООО СНАБГИР">
             <div className={styles.cardHeader}>
-              <Building2 size={24} color="var(--color-primary)" />
+              <Building2 size={24} color="var(--color-primary)" aria-hidden="true" />
               <div className={styles.cardHeaderTitle}>Карточка поставщика</div>
             </div>
 
@@ -89,7 +89,7 @@ export const AboutSection: React.FC = () => {
             <div className={styles.cardFooter}>
               <strong>Оперативная логистика:</strong> Доставка по Смоленску и Смоленской области собственным автотранспортом компании в день готовности заказа.
             </div>
-          </div>
+          </aside>
 
         </div>
       </div>

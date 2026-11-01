@@ -31,28 +31,30 @@ export const AdvantagesSection: React.FC = () => {
   ];
 
   return (
-    <section id="advantages" className={styles.section}>
+    <section id="advantages" className={styles.section} aria-label="Преимущества B2B снабжения SNABGEAR">
       <div className={styles.container}>
         
         <div className={styles.headerRow}>
           <span className={styles.eyebrow}>Почему выбирают SNABGEAR</span>
-          <h2 className={styles.title}>Преимущества работы с нами</h2>
+          <h2 className={styles.title}>
+            Преимущества B2B снабжения с СНАБГИР (SNABGEAR)
+          </h2>
           <p className={styles.subtitle}>
-            Мы строим долгосрочные партнерские отношения с закупщиками и главными инженерами предприятий, обеспечивая предсказуемость и надежность поставок.
+            Мы строим долгосрочные партнерские отношения с закупщиками и главными инженерами предприятий, обеспечивая предсказуемость и надежность поставок инструмента, оборудования и оснастки.
           </p>
         </div>
 
         <div className={styles.grid}>
           {advantages.map((adv, index) => (
-            <div key={index} className={styles.card}>
-              <div className={styles.cardAccentLine} />
-              <div className={styles.iconBox}>
+            <article key={index} className={styles.card} aria-label={adv.title}>
+              <div className={styles.cardAccentLine} aria-hidden="true" />
+              <div className={styles.iconBox} role="img" aria-label={adv.title}>
                 {adv.icon}
               </div>
               <h3 className={styles.cardTitle}>{adv.title}</h3>
               <p className={styles.cardText}>{adv.text}</p>
               <span className={styles.cardBadge}>{adv.badge}</span>
-            </div>
+            </article>
           ))}
         </div>
 

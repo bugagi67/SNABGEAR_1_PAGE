@@ -22,14 +22,14 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToForm, onScrollToCatalog })
             <span>Официальный B2B Поставщик · Работаем с юридическими лицами</span>
           </div>
 
-          {/* H1 Heading strictly according to requirements */}
+          {/* H1 Heading with Company Name & Core B2B Supply Proposition */}
           <h1 className={styles.title}>
-            Комплексное снабжение промышленных предприятий
+            СНАБГИР (SNABGEAR) — Комплексное снабжение предприятий и B2B поставки
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle with commercial keys */}
           <p className={styles.subtitle}>
-            Поставка инструмента, оборудования и крепежа в Смоленске и Смоленской области.
+            Поставка промышленного оборудования, профессионального инструмента, оснастки и расходных материалов в Смоленске и Смоленской области для юридических лиц.
           </p>
 
           {/* Big Red Button + Secondary Action */}

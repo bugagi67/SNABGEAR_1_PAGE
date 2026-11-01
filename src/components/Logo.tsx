@@ -22,8 +22,16 @@ export const Logo: React.FC<LogoProps> = ({
   const subColor = isDark ? '#94A3B8' : '#64748B';
 
   return (
-    <a href="/" className={`inline-block ${className}`} aria-label="SNABGEAR Главная">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 95" width={width} height={height}>
+    <a href="/" className={`inline-block ${className}`} aria-label="СНАБГИР (SNABGEAR) — Главная страница">
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 460 95" 
+        width={width} 
+        height={height}
+        role="img"
+        aria-label="Логотип компании СНАБГИР (SNABGEAR) — Комплексное снабжение предприятий"
+      >
+        <title>СНАБГИР (SNABGEAR) — Комплексное снабжение предприятий</title>
         {/* Значок и типографика переключаются автоматически по переменным */}
         {variant === 1 ? (
           <g transform="translate(10, 5)">

@@ -9,7 +9,10 @@ import {
   FileText, 
   Download,
   Mail,
-  Phone
+  Phone,
+  AlertTriangle,
+  Copy,
+  Check
 } from 'lucide-react';
 
 interface LeadFormSectionProps {
@@ -45,6 +48,8 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [needsActivation, setNeedsActivation] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [submittedDataSummary, setSubmittedDataSummary] = useState<{
     company: string;
     contact: string;
@@ -53,6 +58,24 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
     fileSize?: string;
     fileDataUrl?: string;
   } | null>(null);
+
+  // Check if target email requires one-time FormSubmit activation
+  useEffect(() => {
+    fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.targetEmail}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ _ping: '1' }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.message && data.message.toLowerCase().includes('activation')) {
+          setNeedsActivation(true);
+        } else if (data?.success === 'true') {
+          setNeedsActivation(false);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // If a user clicked "Запросить КП" on a category card, prefill the comment
   useEffect(() => {
@@ -192,6 +215,8 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
     }
     console.log('====================================================');
 
+    let activationDetected = needsActivation;
+
     try {
       // 1. Submit native multipart/form-data via formRef into hidden iframe.
       // FormSubmit requires native multipart/form-data with name="attachment"
@@ -200,32 +225,51 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
         formRef.current.submit();
       }
 
-      // 2. Also send as FormData via AJAX endpoint for dual-channel reliability
+      // 2. Also send as FormData via AJAX endpoint to inspect response status
       if (formRef.current) {
         const ajaxFormData = new FormData(formRef.current);
-        fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.targetEmail}`, {
+        const res = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.targetEmail}`, {
           method: 'POST',
           body: ajaxFormData,
-        }).catch((err) => {
-          console.warn('FormSubmit AJAX notification:', err?.message || err);
         });
+        const resData = await res.json().catch(() => null);
+        if (resData?.message && resData.message.toLowerCase().includes('activation')) {
+          activationDetected = true;
+        } else if (resData?.success === 'true') {
+          activationDetected = false;
+        }
       }
     } catch (err) {
       console.warn('Form submission dispatch fallback:', err);
     }
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setSubmittedDataSummary({
-        company: companyOrInn || 'Юридическое лицо',
-        contact: contactPerson,
-        phone: phone,
-        fileName: attachedFile?.name,
-        fileSize: attachedFile?.sizeFormatted,
-        fileDataUrl: attachedFile?.base64,
-      });
-    }, 800);
+    setNeedsActivation(activationDetected);
+    setIsSubmitting(false);
+    setIsSuccess(true);
+    setSubmittedDataSummary({
+      company: companyOrInn || 'Юридическое лицо',
+      contact: contactPerson,
+      phone: phone,
+      fileName: attachedFile?.name,
+      fileSize: attachedFile?.sizeFormatted,
+      fileDataUrl: attachedFile?.base64,
+    });
+  };
+
+  const handleCopyData = () => {
+    const summaryText = [
+      `ЗАЯВКА НА СНАБЖЕНИЕ — ${COMPANY_INFO.brandName}`,
+      `Организация / ИНН: ${companyOrInn || 'Не указано'}`,
+      `Контактное лицо: ${contactPerson}`,
+      `Телефон: ${phone}`,
+      email ? `Email: ${email}` : '',
+      comment ? `Комментарий: ${comment}` : '',
+      attachedFile ? `Приложен файл: ${attachedFile.name} (${attachedFile.sizeFormatted})` : '',
+    ].filter(Boolean).join('\n');
+
+    navigator.clipboard.writeText(summaryText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   const handleReset = () => {
@@ -239,6 +283,19 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
     setErrors({});
   };
 
+  const mailtoSubject = encodeURIComponent(`Спецификация от ${companyOrInn || contactPerson} [SNABGEAR]`);
+  const mailtoBody = encodeURIComponent(
+    `Добрый день!\n\n` +
+    `Прошу рассчитать спецификацию со следующими параметрами:\n` +
+    `Организация / ИНН: ${companyOrInn || 'Не указано'}\n` +
+    `Контактное лицо: ${contactPerson}\n` +
+    `Телефон: ${phone}\n` +
+    `Email: ${email || 'Не указан'}\n` +
+    (comment ? `Комментарий: ${comment}\n` : '') +
+    (attachedFile ? `\n(Прикрепленный файл: ${attachedFile.name})` : '')
+  );
+  const mailtoUrl = `mailto:${COMPANY_INFO.targetEmail}?subject=${mailtoSubject}&body=${mailtoBody}`;
+
   return (
     <section id="lead-form" className={styles.section}>
       <div className={styles.container}>
@@ -249,7 +306,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
           <div className={styles.headerArea}>
             <span className={styles.eyebrow}>Оперативный расчет сметы</span>
             <h2 className={styles.title}>
-              Отправьте заявку или спецификацию на расчет
+              Отправьте заявку или спецификацию на расчет — Отдел снабжения СНАБГИР
             </h2>
             <p className={styles.subtitle}>
               Прикрепите файл спецификации в любом формате (.xlsx, .pdf, .doc, .csv) или опишите потребности. Инженеры отдела комплектации SNABGEAR подготовят расчет в течение 30 минут. Также принимаем заявки на{' '}
@@ -280,12 +337,33 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
               </div>
 
               <h3 className={styles.successTitle}>
-                Заявка и спецификация успешно отправлены!
+                Заявка сформирована и отправлена!
               </h3>
 
               <p className={styles.successMessage}>
-                Данные заявки и оригинальный файл спецификации переданы в отдел комплектации на адрес <strong>{COMPANY_INFO.targetEmail}</strong>. Мы свяжемся с вами в течение 30 минут для согласования цен и сроков отгрузки.
+                Данные заявки и спецификация переданы на адрес <strong>{COMPANY_INFO.targetEmail}</strong>. Мы свяжемся с вами в течение 30 минут для согласования цен и сроков отгрузки.
               </p>
+
+              {/* Informative banner if target email requires one-time FormSubmit activation */}
+              {needsActivation && (
+                <div className={styles.activationAlert}>
+                  <div className={styles.activationHeader}>
+                    <AlertTriangle size={20} color="#d97706" />
+                    <span>Внимание: требуется однократная активация ящика {COMPANY_INFO.targetEmail}</span>
+                  </div>
+                  <p className={styles.activationText}>
+                    Почтовый шлюз FormSubmit отправил письмо подтверждения на адрес <strong>{COMPANY_INFO.targetEmail}</strong>. Пока кнопка в письме не нажата, новые заявки временно заблокированы сервисом.
+                  </p>
+                  <ol className={styles.activationSteps}>
+                    <li>Войдите в почтовый ящик <strong>{COMPANY_INFO.targetEmail}</strong> (в Яндекс Почте обязательно проверьте папку <strong>«Спам»</strong> или «Рассылки»).</li>
+                    <li>Найдите письмо от <strong>FormSubmit</strong> с темой <em>«Action Required: Confirm your FormSubmit form»</em>.</li>
+                    <li>Нажмите в письме зеленую кнопку <strong>«Activate Form»</strong>.</li>
+                  </ol>
+                  <p className={styles.activationFooterNote}>
+                    Это требуется сделать только 1 раз при подключении адреса. После подтверждения все последующие заявки будут сразу попадать во Входящие.
+                  </p>
+                </div>
+              )}
 
               {submittedDataSummary && (
                 <div className={styles.successSummaryBox}>
@@ -319,6 +397,25 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
 
               {/* Action buttons on success */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginTop: 24 }}>
+                <a
+                  href={mailtoUrl}
+                  className={styles.mailClientBtn}
+                  title="Открыть в вашем почтовом клиенте для прямой отправки"
+                >
+                  <Mail size={16} />
+                  <span>Продублировать через почту (mailto)</span>
+                </a>
+
+                <button
+                  type="button"
+                  className={styles.copyBtn}
+                  onClick={handleCopyData}
+                  title="Скопировать текст заявки в буфер обмена"
+                >
+                  {copied ? <Check size={16} color="var(--color-success)" /> : <Copy size={16} />}
+                  <span>{copied ? 'Скопировано!' : 'Скопировать текст заявки'}</span>
+                </button>
+
                 {submittedDataSummary?.fileDataUrl && (
                   <a
                     href={submittedDataSummary.fileDataUrl}
@@ -327,9 +424,10 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
                     style={{ backgroundColor: 'var(--color-bg-page)', color: 'var(--color-dark)', border: '1px solid var(--color-border)', display: 'inline-flex', alignItems: 'center', gap: 8 }}
                   >
                     <Download size={16} />
-                    <span>Скачать отправленный файл</span>
+                    <span>Скачать файл</span>
                   </a>
                 )}
+
                 <button
                   type="button"
                   className={styles.resetBtn}

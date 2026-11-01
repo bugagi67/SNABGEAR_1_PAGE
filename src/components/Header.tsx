@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToForm }) => {
         <Logo width={205} height={44} theme="light" className={styles.logoLink} />
 
         {/* Desktop Navigation */}
-        <nav className={styles.nav}>
+        <nav className={styles.nav} aria-label="Главное меню сайта">
           <a
             href="#about"
             className={styles.navLink}
@@ -104,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToForm }) => {
             <div style={{ padding: '0 0 16px', borderBottom: '1px solid var(--color-border)' }}>
               <Logo width={180} height={38} theme="light" />
             </div>
-            <div className={styles.mobileNavLinks}>
+            <nav className={styles.mobileNavLinks} aria-label="Мобильное меню навигации">
               <a
                 href="#about"
                 className={styles.navLink}
@@ -133,7 +133,7 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToForm }) => {
               >
                 Контакты
               </a>
-            </div>
+            </nav>
 
             <div className={styles.mobileContacts}>
               <div className={styles.cityTag} style={{ justifyContent: 'flex-start' }}>

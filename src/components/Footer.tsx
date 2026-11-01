@@ -58,7 +58,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
           </div>
 
           {/* Quick Navigation Links */}
-          <div>
+          <nav aria-label="Быстрая навигация по сайту">
             <div className={styles.colTitle}>Навигация</div>
             <ul className={styles.linksList}>
               <li>
@@ -98,14 +98,14 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
                 </a>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Contacts & Location */}
-          <div>
+          <address style={{ fontStyle: 'normal' }} aria-label="Контакты ООО СНАБГИР">
             <div className={styles.colTitle}>Контакты</div>
             <div className={styles.contactsList}>
               <div className={styles.contactItem}>
-                <MapPin size={20} className={styles.contactIcon} />
+                <MapPin size={20} className={styles.contactIcon} aria-hidden="true" />
                 <div>
                   <div className={styles.contactLabel}>Регион поставок:</div>
                   <div className={styles.contactValue}>{COMPANY_INFO.location}</div>
@@ -113,7 +113,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
               </div>
 
               <div className={styles.contactItem}>
-                <Phone size={20} className={styles.contactIcon} />
+                <Phone size={20} className={styles.contactIcon} aria-hidden="true" />
                 <div>
                   <div className={styles.contactLabel}>Отдел продаж и снабжения:</div>
                   <a href={`tel:${COMPANY_INFO.phoneClean}`} className={styles.contactPhone}>
@@ -123,7 +123,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
               </div>
 
               <div className={styles.contactItem}>
-                <Mail size={20} className={styles.contactIcon} />
+                <Mail size={20} className={styles.contactIcon} aria-hidden="true" />
                 <div>
                   <div className={styles.contactLabel}>Прием заявок и смет:</div>
                   <a href={`mailto:${COMPANY_INFO.email}`} className={styles.contactValue}>
@@ -133,14 +133,14 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToForm }) => {
               </div>
 
               <div className={styles.contactItem}>
-                <Clock size={20} className={styles.contactIcon} />
+                <Clock size={20} className={styles.contactIcon} aria-hidden="true" />
                 <div>
                   <div className={styles.contactLabel}>Режим работы:</div>
                   <div className={styles.contactValue}>{COMPANY_INFO.workHours}</div>
                 </div>
               </div>
             </div>
-          </div>
+          </address>
 
         </div>
 
